@@ -8,7 +8,6 @@ use Closure;
 use CxRxExO\Tiktoken\Exception\RegexError;
 use CxRxExO\Tiktoken\Util\EncodeUtil;
 use CxRxExO\Tiktoken\Vocab\Vocab;
-use Stringable;
 
 use function array_map;
 use function array_slice;
@@ -24,7 +23,7 @@ use function sprintf;
 use const PHP_INT_MAX;
 
 /** @psalm-import-type NonEmptyByteVector from EncodeUtil */
-final class Encoder implements Stringable
+final class Encoder
 {
     public string $name;
     private ?Vocab $vocab;
