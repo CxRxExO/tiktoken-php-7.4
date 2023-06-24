@@ -12,7 +12,7 @@ use Symfony\Contracts\Service\ResetInterface;
 
 use function getenv;
 use function sprintf;
-use function str_starts_with;
+use function strpos;
 
 final class EncoderProvider implements ResetInterface
 {
@@ -101,7 +101,7 @@ final class EncoderProvider implements ResetInterface
         }
 
         foreach (self::MODEL_PREFIX_TO_ENCODING as $prefix => $modelEncoding) {
-            if (str_starts_with($model, $prefix)) {
+            if (strpos($model, $prefix) === 0) {
                 return $this->get($modelEncoding);
             }
         }

@@ -26,14 +26,14 @@ use const PHP_INT_MAX;
 final class Encoder
 {
     public string $name;
-    private ?Vocab $vocab;
+    private Vocab $vocab;
     private string $pattern;
 
     /**
      * @param non-empty-string $name
      * @param non-empty-string $pattern
      */
-    public function __construct(string $name, ?Vocab $vocab, string $pattern)
+    public function __construct(string $name, Vocab $vocab, string $pattern)
     {
         $this->pattern = $pattern;
         $this->vocab = $vocab;
@@ -42,7 +42,7 @@ final class Encoder
 
     public function __toString(): string
     {
-        return sprintf('Encoder(name="%s", vocab=%d)', $this->name, $this->vocab !== null ? count($this->vocab) : 0);
+        return sprintf('Encoder(name="%s", vocab=%d)', $this->name, count($this->vocab));
     }
 
     /** @return list<int> */
@@ -65,11 +65,7 @@ final class Encoder
 
             $piece = EncodeUtil::toBytes($match);
 
-            if ($this->vocab !== null) {
-                $rank = $this->vocab->tryGetRank($piece);
-            } else {
-                $rank = null;
-            }
+            $rank = $this->vocab->tryGetRank($piece);
 
             if ($rank !== null) {
                 $tokens[] = $rank;
@@ -104,16 +100,16 @@ final class Encoder
     {
         /** @var list<array{int, int}> $parts */
         $parts = array_map(
-            /**
-             * @return (int|null)[]
-             * @psalm-return list{int, int|null}
-             */
+        /**
+         * @return (int|null)[]
+         * @psalm-return list{int, int|null}
+         */
             function (int $i) use ($bytes): array {
                 if ($i + 1 < count($bytes)) {
                     $piece = array_slice($bytes, $i, 2);
                     assert(count($piece) === 2);
 
-                    return [$i, ($this->vocab !== null ? $this->vocab->tryGetRank($piece) : null) ?? PHP_INT_MAX];
+                    return [$i, $this->vocab->tryGetRank($piece) ?? PHP_INT_MAX];
                 }
 
                 return [$i, PHP_INT_MAX];
@@ -129,7 +125,7 @@ final class Encoder
             $piece = array_slice($bytes, $offset, $parts[$startIndex + 2][0] - $offset);
             assert(count($piece) > 0);
 
-            return ($this->vocab !== null ? $this->vocab->tryGetRank($piece) : null ) ?? PHP_INT_MAX;
+            return $this->vocab->tryGetRank($piece) ?? PHP_INT_MAX;
         };
 
         while (count($parts) > 1) {
@@ -169,7 +165,7 @@ final class Encoder
             $piece = array_slice($bytes, $parts[$i][0], $parts[$i + 1][0] - $parts[$i][0]);
             assert(count($piece) > 0);
 
-            $res[] = $this->vocab ? $this->vocab->getRank($piece) : 0;
+            $res[] = $this->vocab->getRank($piece);
         }
 
         return $res;

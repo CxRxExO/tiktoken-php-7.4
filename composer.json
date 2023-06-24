@@ -12,8 +12,7 @@
     "decode"
   ],
   "require": {
-    "php": "^7.4",
-    "symfony/service-contracts": "^2.5 || ^3.0"
+    "php": "^7.4"
   },
   "require-dev": {
     "doctrine/coding-standard": "^11.1",
