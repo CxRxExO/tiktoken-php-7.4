@@ -1,0 +1,51 @@
+{
+  "name": "cxrxexo/tiktoken",
+  "type": "library",
+  "license": "MIT",
+  "description": "PHP version of tiktoken. PHP 7.4+ required.",
+  "keywords": [
+    "openai",
+    "tiktoken",
+    "tokenizer",
+    "bpe",
+    "encode",
+    "decode"
+  ],
+  "require": {
+    "php": "^7.4",
+    "symfony/service-contracts": "^2.5 || ^3.0"
+  },
+  "require-dev": {
+    "doctrine/coding-standard": "^11.1",
+    "phpunit/phpunit": "^9.0",
+    "psalm/plugin-phpunit": "^0.18.4",
+    "vimeo/psalm": "^5.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "CxRxExO\\Tiktoken\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CxRxExO\\Tiktoken\\Tests\\": "tests"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "scripts": {
+    "check": [
+      "@cs-check",
+      "@analyse",
+      "@test"
+    ],
+    "analyse": "psalm --stats",
+    "cs-check": "phpcs",
+    "cs-fix": "phpcbf",
+    "test": "phpunit --colors=always"
+  }
+}
