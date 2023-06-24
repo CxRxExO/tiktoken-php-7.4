@@ -1,5 +1,9 @@
 # tiktoken-php
 
+![Packagist Version](https://img.shields.io/packagist/v/cxrxexo/tiktoken)
+![Build status](https://img.shields.io/github/actions/workflow/status/cxrxexo/tiktoken-php-7.4/ci.yml?branch=master)
+![License](https://img.shields.io/github/license/cxrxexo/tiktoken-php-7.4)
+
 This is a port of the [tiktoken-php](https://github.com/yethee/tiktoken-php).
 
 ## Installation
